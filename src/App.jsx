@@ -1,7 +1,18 @@
+import { BrowserRouter, Routes, Route } from "react-router";
+import Navbar from "./components/Navbar";
+import Home from "./Home";
+import Profile from "./Profile";
+
 function App() {
   return (
     <>
-      <h1 class="text-3xl font-bold underline">Hello world!</h1>
+      <Navbar />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/profile" element={<Profile />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }
