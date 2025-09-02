@@ -1,7 +1,31 @@
+import { useState } from "react";
+import axios from "axios";
+
 const Login = () => {
+  const [emailId, setEmailId] = useState("nattu@gmail.com");
+  const [password, setPassword] = useState("Nattu@1234");
+
+  const handleLogin = async () => {
+    try {
+      const user = await axios.post(
+        "http://localhost:7777/login",
+        {
+          emailId,
+          password,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      console.log(user.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <div>
-      <div className="card bg-base-200 w-96 shadow-sm mx-auto my-[10%]">
+      <div className="card bg-base-200 w-96 shadow-sm mx-auto md:my-[10%] sm:my-[20%] my-[30%]">
         <div className="card-body">
           <h2 className="card-title">Login</h2>
           <div>
@@ -22,7 +46,13 @@ const Login = () => {
                   <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
                 </g>
               </svg>
-              <input type="email" placeholder="Email id" required />
+              <input
+                type="email"
+                placeholder="Email id"
+                required
+                value={emailId}
+                onChange={(e) => setEmailId(e.target.value)}
+              />
             </label>
             <label className="input validator my-5">
               <svg
@@ -52,11 +82,15 @@ const Login = () => {
                 placeholder="Password"
                 minlength="8"
                 pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </label>
           </div>
           <div className="card-actions justify-center">
-            <button className="btn btn-primary">Login</button>
+            <button className="btn btn-primary" onClick={handleLogin}>
+              Login
+            </button>
           </div>
         </div>
       </div>
