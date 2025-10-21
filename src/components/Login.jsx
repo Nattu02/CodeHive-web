@@ -1,14 +1,20 @@
 import { useState } from "react";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
+import { useNavigate } from "react-router";
+import { BASE_URL } from "../utils/constants";
 
 const Login = () => {
   const [emailId, setEmailId] = useState("nattu@gmail.com");
   const [password, setPassword] = useState("Nattu@1234");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     try {
       const user = await axios.post(
-        "http://localhost:7777/login",
+        BASE_URL + "/login",
         {
           emailId,
           password,
@@ -17,7 +23,9 @@ const Login = () => {
           withCredentials: true,
         }
       );
-      console.log(user.data);
+      // console.log(user.data);
+      dispatch(addUser(user.data));
+      return navigate("/feed");
     } catch (err) {
       console.error(err);
     }
@@ -80,7 +88,7 @@ const Login = () => {
                 type="password"
                 required
                 placeholder="Password"
-                minlength="8"
+                minLength="8"
                 pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
