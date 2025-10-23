@@ -12,7 +12,6 @@ const Home = () => {
   const user = useSelector((store) => store.user);
   const fetchUser = async () => {
     if (user) {
-      console.log("Already logged in..");
       return;
     }
     try {
