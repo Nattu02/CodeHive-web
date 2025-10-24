@@ -38,10 +38,13 @@ const Connections = () => {
   return (
     <>
       {connections.map((connection) => {
-        const { firstName, lastName, profile } = connection;
+        const { _id, firstName, lastName, profile } = connection;
 
         return (
-          <div className="flex w-1/3 justify-around bg-base-300 my-5 h-25 items-center mx-auto rounded-xl">
+          <div
+            key={_id}
+            className="flex w-1/3 justify-around bg-base-300 my-5 h-25 items-center mx-auto rounded-xl"
+          >
             <img src={profile} className="w-20 h-20 rounded-full"></img>
             <h1>{firstName + " " + lastName}</h1>
           </div>
