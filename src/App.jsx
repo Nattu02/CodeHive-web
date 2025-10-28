@@ -7,6 +7,7 @@ import appStore from "./utils/appStore";
 import { Provider } from "react-redux";
 import Connections from "./components/Connections";
 import Requests from "./components/Requests";
+import Error from "./components/Error";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
               <Route path="/connections" element={<Connections />} />
               <Route path="/requests" element={<Requests />} />
             </Route>
+              <Route path="/error" element={<Error />} />
           </Routes>
         </BrowserRouter>
       </Provider>

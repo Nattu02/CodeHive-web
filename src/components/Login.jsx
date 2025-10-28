@@ -6,11 +6,14 @@ import { useNavigate } from "react-router";
 import { BASE_URL } from "../utils/constants";
 
 const Login = () => {
-  const [emailId, setEmailId] = useState("nattu@gmail.com");
-  const [password, setPassword] = useState("Nattu@1234");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setlastName] = useState("");
+  const [emailId, setEmailId] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLogin, setISLogin] = useState(true);
+  const [error, setError] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [error, setError] = useState("");
 
   const handleLogin = async () => {
     try {
@@ -31,12 +34,79 @@ const Login = () => {
     }
   };
 
+  const handleSignup = async () => {
+    try {
+      await axios.post(
+        BASE_URL + "/signup",
+        { firstName, lastName, emailId, password },
+        { withCredentials: true }
+      );
+    } catch (err) {
+      console.log(err.response);
+    }
+  };
+
   return (
     <div>
-      <div className="card bg-base-200 w-96 shadow-sm mx-auto md:my-[10%] sm:my-[20%] my-[30%]">
+      <div className="card bg-base-200 w-96 shadow-sm mx-auto md:my-[5%] sm:my-[20%] my-[30%]">
         <div className="card-body">
-          <h2 className="card-title">Login</h2>
+          <h2 className="card-title">{isLogin ? "Login" : "Sign Up"}</h2>
           <div>
+            {!isLogin && (
+              <div>
+                <label className="input my-5">
+                  <svg
+                    className="h-[1em] opacity-50"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                  >
+                    <g
+                      strokeLinejoin="round"
+                      strokeLinecap="round"
+                      strokeWidth="2.5"
+                      fill="none"
+                      stroke="currentColor"
+                    >
+                      <circle cx="12" cy="7" r="4"></circle>
+                      <path d="M5.5 21a7.5 7.5 0 0 1 13 0"></path>
+                    </g>
+                  </svg>
+
+                  <input
+                    type="text"
+                    required
+                    placeholder="First Name"
+                    minLength="4"
+                    onChange={(e) => setFirstName(e.target.value)}
+                  />
+                </label>
+                <label className="input my-5">
+                  <svg
+                    className="h-[1em] opacity-50"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                  >
+                    <g
+                      strokeLinejoin="round"
+                      strokeLinecap="round"
+                      strokeWidth="2.5"
+                      fill="none"
+                      stroke="currentColor"
+                    >
+                      <circle cx="12" cy="7" r="4"></circle>
+                      <path d="M5.5 21a7.5 7.5 0 0 1 13 0"></path>
+                    </g>
+                  </svg>
+                  <input
+                    type="text"
+                    required
+                    placeholder="Last Name"
+                    minLength="4"
+                    onChange={(e) => setlastName(e.target.value)}
+                  />
+                </label>
+              </div>
+            )}
             <label className="input validator my-5">
               <svg
                 className="h-[1em] opacity-50"
@@ -58,7 +128,6 @@ const Login = () => {
                 type="email"
                 placeholder="Email id"
                 required
-                value={emailId}
                 onChange={(e) => setEmailId(e.target.value)}
               />
             </label>
@@ -90,16 +159,26 @@ const Login = () => {
                 placeholder="Password"
                 minLength="8"
                 pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
             </label>
             <p className="font-bold text-red-500">{error}</p>
           </div>
           <div className="card-actions justify-center">
-            <button className="btn btn-primary" onClick={handleLogin}>
-              Login
+            <button
+              className="btn btn-primary"
+              onClick={() => (isLogin ? handleLogin() : handleSignup())}
+            >
+              {isLogin ? "Login" : "Sign Up"}
             </button>
+          </div>
+          <div
+            className="mx-auto mt-5 cursor-pointer hover:underline hover:font-bold"
+            onClick={() => {
+              setISLogin((value) => !value);
+            }}
+          >
+            <p>{isLogin ? "New user? Sign Up" : "Already a user? Login"}</p>
           </div>
         </div>
       </div>

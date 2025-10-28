@@ -3,13 +3,18 @@ import { BASE_URL } from "../utils/constants";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { addFeed } from "../utils/feedSlice";
-import UserCard from "./UserCard";
+import UserCard from "./userCard";
+import { useNavigate } from "react-router";
 
 const Feed = () => {
   const dispatch = useDispatch();
   const feed = useSelector((store) => store.feed);
+  const user = useSelector((store) => store.user);
+
+  const navigate = useNavigate();
 
   const getFeed = async () => {
+    if (!user) return navigate("/login");
     if (feed && feed.length > 0) return;
     try {
       const res = await axios.get(BASE_URL + "/feed", {

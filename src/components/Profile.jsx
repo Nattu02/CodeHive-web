@@ -9,11 +9,12 @@ const Profile = () => {
   const user = useSelector((store) => store.user);
   const dispatch = useDispatch();
 
-  const { firstName, lastName, gender, profile } = user;
+  const { firstName, lastName, age, gender, profile } = user || {};
 
   const [fName, setFname] = useState(firstName);
   const [lName, setLname] = useState(lastName);
   const [gend, setGender] = useState(gender);
+  const [ag, setAge] = useState(age);
   const [prof, setProfile] = useState(profile);
   const [toast, setToast] = useState(false);
 
@@ -25,13 +26,13 @@ const Profile = () => {
           firstName: fName,
           lastName: lName,
           gender: gend,
+          age: ag,
           profile: prof,
         },
         {
           withCredentials: true,
         }
       );
-      console.log(updatedUser.data.data);
       dispatch(addUser(updatedUser?.data?.data));
       setToast(true);
       setTimeout(() => {
@@ -73,6 +74,16 @@ const Profile = () => {
                 placeholder="Last name"
                 value={lName}
                 onChange={(e) => setLname(e.target.value)}
+              />
+            </fieldset>
+            <fieldset className="fieldset">
+              <legend className="fieldset-legend">Age</legend>
+              <input
+                type="number"
+                className="input"
+                placeholder="Age"
+                value={ag}
+                onChange={(e) => setAge(e.target.value)}
               />
             </fieldset>
             <fieldset className="fieldset">
