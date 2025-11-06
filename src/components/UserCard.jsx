@@ -2,11 +2,12 @@ import axios from "axios";
 import { BASE_URL } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { addFeed } from "../utils/feedSlice";
+import { HandshakeIcon, X } from "lucide-react";
 
 const UserCard = ({ user }) => {
   const dispatch = useDispatch();
   const feed = useSelector((store) => store.feed);
-  const { _id, firstName, lastName, age, gender, profile } = user;
+  const { _id, firstName, lastName, role, profile } = user;
 
   const handleRequest = async (choice, id) => {
     try {
@@ -29,8 +30,10 @@ const UserCard = ({ user }) => {
           <img src={profile} alt="user image" className="rounded-xl" />
         </figure>
         <div className="card-body items-center text-center">
-          <h2 className="card-title">{firstName + " " + lastName}</h2>
-          <p>{age + ", " + gender}</p>
+          <h2 className="card-title lg:text-3xl">
+            {firstName + " " + lastName}
+          </h2>
+          <p>{role}</p>
           <div className="card-actions">
             <button
               className="btn btn-primary mx-1"
@@ -38,7 +41,7 @@ const UserCard = ({ user }) => {
                 handleRequest("ignored", _id);
               }}
             >
-              Ignore
+              <X />
             </button>
             <button
               className="btn btn-primary mx-1"
@@ -46,7 +49,7 @@ const UserCard = ({ user }) => {
                 handleRequest("interested", _id);
               }}
             >
-              Interested
+              <HandshakeIcon />
             </button>
           </div>
         </div>

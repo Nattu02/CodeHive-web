@@ -15,8 +15,18 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const checkFields = () => {
+    if (
+      !isLogin &&
+      (firstName === "" || lastName === "" || emailId === "" || password === "")
+    ) {
+      setError("Please fill all required fields");
+    }
+  };
+
   const handleLogin = async () => {
     try {
+      checkFields();
       const user = await axios.post(
         BASE_URL + "/login",
         {
@@ -36,6 +46,7 @@ const Login = () => {
 
   const handleSignup = async () => {
     try {
+      checkFields();
       await axios.post(
         BASE_URL + "/signup",
         { firstName, lastName, emailId, password },
