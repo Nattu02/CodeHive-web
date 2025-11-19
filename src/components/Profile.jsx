@@ -1,15 +1,13 @@
-import {  useState } from "react";
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { BASE_URL } from "../utils/constants";
 import axios from "axios";
 import { addUser } from "../utils/userSlice";
+import { ImageUp } from "lucide-react";
 
 const Profile = () => {
   const user = useSelector((store) => store.user);
   const dispatch = useDispatch();
-
- 
-
 
   const { firstName, lastName, gender, role, skills, about } = user;
 
@@ -51,7 +49,6 @@ const Profile = () => {
     }
   };
 
-
   return (
     <div>
       {toast && (
@@ -68,13 +65,20 @@ const Profile = () => {
       <div className="grid grid-cols-12 gap-7 mx-[8%] h-[100%] my-[2%]">
         <div className="col-span-12 md:col-span-4  flex flex-col items-center justify-center border-2 rounded-2xl shadow-2xl shadow-neutral-900 border-zinc-500">
           <figure className="h-[150px] w-[150px] m-3">
-            <img
-              src={
-                "https://dpemoji.com/wp-content/uploads/2023/12/vijay-photos27.jpg"
-              }
-              alt="user image"
-              className="rounded-xl"
-            />
+            {!isEdit ? (
+              <img
+                src={
+                  "https://dpemoji.com/wp-content/uploads/2023/12/vijay-photos27.jpg"
+                }
+                alt="user image"
+                className="rounded-xl"
+              />
+            ) : (
+              <div className="h-full w-full">
+                <input type="file" className="opacity-40 relative cursor-pointer" />
+                <ImageUp className="h-full w-full"/>
+              </div>
+            )}
           </figure>
           <h2 className="text-2xl font-bold pt-2">{fname + " " + lname}</h2>
           <h4 className="text-xl font-semibold m-2">{userRole}</h4>
